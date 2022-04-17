@@ -1,10 +1,17 @@
-package com.azar_jobs.models;
+package com.azar_jobs.user.candidate;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+
+import com.azar_jobs.jobOffer.JobOffer;
+import com.azar_jobs.user.User;
+import com.azar_jobs.user.UserType;
 @Entity
 @DiscriminatorValue("candidate")
 public class Candidate extends User implements Serializable {
@@ -15,6 +22,10 @@ public class Candidate extends User implements Serializable {
 	private Date dateOfBirth;
 	private String gov;
 	private String civility;
+	
+	@ManyToMany( cascade = 
+			CascadeType.ALL, mappedBy = "candidate")
+			private Set<JobOffer> jobOffer;
 	
 	public Candidate(String email, String password, UserType userType, String candidateName, String familyName,
 			Date dateOfBirth, String gov, String civility) {
@@ -64,6 +75,16 @@ public class Candidate extends User implements Serializable {
 
 	public void setCivility(String civility) {
 		this.civility = civility;
+	}
+	
+	
+
+	public Set<JobOffer> getJobOffer() {
+		return jobOffer;
+	}
+
+	public void setJobOffer(Set<JobOffer> jobOffer) {
+		this.jobOffer = jobOffer;
 	}
 
 	@Override

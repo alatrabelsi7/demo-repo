@@ -1,9 +1,17 @@
-package com.azar_jobs.models;
+package com.azar_jobs.user.employer;
 
 import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+
+import com.azar_jobs.jobOffer.JobOffer;
+import com.azar_jobs.user.User;
+import com.azar_jobs.user.UserType;
 @Entity
 @DiscriminatorValue("employer")
 public class Employer extends User implements Serializable {
@@ -14,6 +22,10 @@ public class Employer extends User implements Serializable {
 	private String description;
 	private String gov;
 	private String sector;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name="jobOfferId")
+	private Set<JobOffer> jobOffer;
 	
 	public Employer(String email, String password, UserType userType, String name, String adress, String description,
 			String gov, String sector) {
@@ -63,6 +75,15 @@ public class Employer extends User implements Serializable {
 
 	public void setSector(String sector) {
 		this.sector = sector;
+	}
+	
+
+	public Set<JobOffer> getJobOffer() {
+		return jobOffer;
+	}
+
+	public void setJobOffer(Set<JobOffer> jobOffer) {
+		this.jobOffer = jobOffer;
 	}
 
 	@Override

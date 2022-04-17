@@ -1,13 +1,20 @@
-package com.azar_jobs.models;
+package com.azar_jobs.jobOffer;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+
+import com.azar_jobs.user.candidate.Candidate;
+import com.azar_jobs.user.employer.Employer;
 @Entity
 public class JobOffer implements Serializable{
 	
@@ -23,6 +30,12 @@ public class JobOffer implements Serializable{
 	private List<String> levelStudy;
 	private String requirements;
 	private List<String> tags;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	private Set<Candidate> candidate;
+	
+	@OneToOne
+	private Employer employer;
 	
 	public JobOffer(String title, String description, Date creationDate, Date expirationDate, String type,
 			List<String> levelStudy, String requirements, List<String> tags) {
@@ -101,6 +114,24 @@ public class JobOffer implements Serializable{
 	public void setTags(List<String> tags) {
 		this.tags = tags;
 	}
+	
+
+	public Employer getEmployer() {
+		return employer;
+	}
+
+	public void setEmployer(Employer employer) {
+		this.employer = employer;
+	}
+	
+
+	public Set<Candidate> getCandidate() {
+		return candidate;
+	}
+
+	public void setCandidate(Set<Candidate> candidate) {
+		this.candidate = candidate;
+	}
 
 	@Override
 	public String toString() {
@@ -108,7 +139,6 @@ public class JobOffer implements Serializable{
 				+ creationDate + ", expirationDate=" + expirationDate + ", type=" + type + ", levelStudy=" + levelStudy
 				+ ", requirements=" + requirements + ", tags=" + tags + "]";
 	}
-	
 	
 	
 }

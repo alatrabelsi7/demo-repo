@@ -1,8 +1,9 @@
-package com.azar_jobs.models;
+package com.azar_jobs.user;
 
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -27,6 +28,7 @@ public abstract class User implements Serializable{
 	private String password;
 	private Date creationDate = new Date();
 	@Enumerated(EnumType.STRING)
+	@Column(insertable=false,updatable=false)
 	private UserType userType;
 	
 	public User(String email, String password, UserType userType) {
